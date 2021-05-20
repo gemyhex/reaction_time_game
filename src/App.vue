@@ -1,7 +1,8 @@
 <template>
   <div id="nav">
-    <h1>Reaction Time</h1>
-    <button @click="startGame" :disabled="isPlaying">play</button>
+    <h1>Reaction Score <br>Game</h1>
+    <button id="play" @click="startGame" :disabled="isPlaying">play</button>
+    <button id="restart" @click="restart">Restart</button>
     <Block v-if="isPlaying" :delay="delay" @end="endGame"></Block>
     <Results v-if="showResults" :score="score"></Results>
   </div>
@@ -33,6 +34,9 @@ export default {
       this.score = reactionTime;
       this.isPlaying = false
       this.showResults = true
+    },
+    restart(){
+      window.location.reload()
     }
   }
 }
@@ -49,14 +53,28 @@ export default {
 }
 
 #nav {
-  padding: 30px;
-
-  a {
+  h1{
+    text-transform: uppercase;
+  }
+  button{
+    background: transparent;
+    border: 1px solid #333;
+    padding: 10px 30px;
+    cursor: pointer;
+    margin: 10px;
     font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+    text-transform: uppercase;
+  }
+  #play{
+    &:hover{
+      background: green;
+      color: white;
+    }
+  }
+  #restart{
+    &:hover{
+      background: red;
+      color: white;
     }
   }
 }
