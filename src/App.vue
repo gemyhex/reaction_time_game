@@ -1,10 +1,43 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <h1>Reaction Time</h1>
+    <button @click="startGame" :disabled="isPlaying">play</button>
+    <Block v-if="isPlaying" :delay="delay" @end="endGame"></Block>
+    <Results v-if="showResults" :score="score"></Results>
   </div>
   <router-view />
 </template>
+
+<script>
+import Block from "./components/Block"
+import Results from "./components/Results"
+export default {
+  data(){
+    return {
+      isPlaying: false,
+      delay: null,
+      score: null,
+      showResults: false
+    }
+  },
+  components:{
+    Block,
+    Results
+  },
+  methods: {
+    startGame(){
+      this.delay = 2000 + Math.random() * 5000
+      this.isPlaying = true
+    },
+    endGame(reactionTime){
+      this.score = reactionTime;
+      this.isPlaying = false
+      this.showResults = true
+    }
+  }
+}
+</script>
+
 
 <style lang="scss">
 #app {
@@ -12,7 +45,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #444;
 }
 
 #nav {
